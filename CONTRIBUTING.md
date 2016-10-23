@@ -1,9 +1,8 @@
 # Contributor License Agreement
-----
 The following terms are used throughout this agreement:
 
 * **You** - the person or legal entity including its affiliates asked to accept this agreement. An affiliate is any entity that controls or is controlled by the legal entity, or is under common control with it.
-* **Project** - is an umbrella term that refers to the [BearnBot repository]() and assets stored within the stated repository and assets related to the repository.
+* **Project** - is an umbrella term that refers to the [BearnBot repository](https://github.com/SReject/BearnBot) and assets stored within the stated repository and assets related to the repository.
 * **Contribution** - any type of work that is submitted to a Project, including any modifications or additions to existing work.
 * **Submitted** - conveyed to a Project via a pull request, commit, issue, or any form of electronic, written, or verbal communication with GitHub, contributors or maintainers.
 
@@ -19,3 +18,5 @@ If any entity institutes patent litigation - including cross-claim or countercla
 
 ### 3. Source of Contribution.
 Your contribution is either your original creation, based upon previous work that, to the best of your knowledge, is covered under an appropriate open source license and you have the right under that license to submit that work with modifications, whether created in whole or in part by you, or you have clearly identified the source of the contribution and any license or other restriction (like related patents, trademarks, and license agreements) of which you are personally aware.
+
+# <a href="https://www.clahub.com/agreements/SReject/BearnBot">Sign the Contributor License Agreement</a>
