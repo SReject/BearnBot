@@ -19,4 +19,4 @@ If any entity institutes patent litigation - including cross-claim or countercla
 ### 3. Source of Contribution.
 Your contribution is either your original creation, based upon previous work that, to the best of your knowledge, is covered under an appropriate open source license and you have the right under that license to submit that work with modifications, whether created in whole or in part by you, or you have clearly identified the source of the contribution and any license or other restriction (like related patents, trademarks, and license agreements) of which you are personally aware.
 
-# <a href="https://www.clahub.com/agreements/SReject/BearnBot">Sign the Contributor License Agreement</a>.
+# <a href="https://www.clahub.com/agreements/SReject/BearnBot">Sign the Contributor License Agreement</a>
