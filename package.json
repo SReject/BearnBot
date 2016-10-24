@@ -15,6 +15,6 @@
     },
 
     "scripts":{
-        "start": "bearnbot.js",
+        "start": "bearnbot.js"
     }
 }
