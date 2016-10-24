@@ -2,20 +2,21 @@
     "name": "bearnbot",
     "version": "0.0.1",
     "description": "A chat bot for beam.pro",
-    "repository": {
-        "type": "git",
-        "url": "https://github.com/SReject/bearnBot.git"
-    },
+
     "bugs": {
         "url": "https://github.com/SReject/BearnBot/issues"
     },
 
     "main": "bearnbot.js",
 
-    "engine": "node >= 6.0",
-    "dependencies": {
-        "ws": "1.1.x",
-        "request": "2.75.x",
-        "mysql": "2.11.x"
-    }
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/SReject/bearnBot.git"
+    },
+
+    "scripts":{
+        "start": "bearnbot.js"
+    },
+
+    "engine": "node >= 6.0"
 }
