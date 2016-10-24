@@ -16,5 +16,7 @@
 
     "scripts":{
         "start": "bearnbot.js"
-    }
+    },
+
+    "engine": "node >= 6.0"
 }
