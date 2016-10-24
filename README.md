@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/SReject/BearnBot.svg?branch=master)](https://travis-ci.org/SReject/BearnBot) [![Chat](https://badges.gitter.im/SReject/BearnBot.svg)](https://gitter.im/SReject/BearnBot?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+[![Build Status](https://travis-ci.org/SReject/BearnBot.svg?branch=master)](https://travis-ci.org/SReject/BearnBot) [![Chat](https://badges.gitter.im/SReject/BearnBot.svg)](https://gitter.im/BearnBot/lobby?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
 # About  
 -----
