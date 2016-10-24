@@ -1,0 +1,20 @@
+{
+    "name": "bearnbot",
+    "version": "0.0.1",
+    "description": "A chat bot for beam.pro",
+
+    "bugs": {
+        "url": "https://github.com/SReject/BearnBot/issues"
+    },
+
+    "main": "bearnbot.js",
+
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/SReject/bearnBot.git"
+    },
+
+    "scripts":{
+        "start": "bearnbot.js",
+    }
+}
