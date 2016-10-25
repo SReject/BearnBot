@@ -11,11 +11,11 @@
     },
 
     "main": "bearnbot.js",
-
     "engine": "node >= 6.0",
     "dependencies": {
-        "ws": "1.1.x",
-        "request": "2.75.x",
-        "mysql": "2.11.x"
+        "mysql": "2.11.x",
+        "hapi": "15.2.x",
+        "beam-client-node": "0.8.0",
+        "carina": "0.5.x",
     }
 }

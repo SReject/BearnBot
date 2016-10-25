@@ -1,0 +1,26 @@
+{
+    "api": {
+        "apibaseurl":   "https://beam.pro/api/v1/",
+        "redirect_uri": "http://example.com",
+        "client_id":    "oauth_client_id",
+        "secret":       "oauth_client_secret",
+        "authorizeurl": "https://beam.pro/oauth/authorize",
+        "tokenurl":     "https://beam.pro/api/v1/oauth/token"
+    },
+
+    "database": {
+        "type": "mongodb",
+        "host": "mongodb.example.com",
+        "port": 3306,
+        "database": "database_name",
+        "username": "database_username",
+        "password": "database_password"
+    },
+
+    "bot": {
+        "username": "BearnBot",
+        "password": "password"
+    },
+
+    "site": false
+}
