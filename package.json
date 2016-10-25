@@ -16,6 +16,6 @@
         "mysql": "2.11.x",
         "hapi": "15.2.x",
         "beam-client-node": "0.8.0",
-        "carina": "0.5.x",
+        "carina": "0.5.x"
     }
 }
