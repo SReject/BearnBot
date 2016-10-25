@@ -9,7 +9,7 @@
     },
 
     "database": {
-        "type": "mongodb",
+        "_db_type": "mongodb",
         "host": "mongodb.example.com",
         "port": 3306,
         "database": "database_name",

@@ -5,9 +5,15 @@ let supported = {
     'mongodb': './wrapper-monogodb.js'
 };
 
-module.export = {
+let wrapper = {
 
-    // returns a wrapper instance for the specified database type
+    /**
+     * returns a database wrapper instance for the specified database type
+     * @access public
+     * @param {Object} config
+     * @param {String} config._db_type
+     * @return {Database}
+     */
     boot: (config) => {
         // validate config
         if (!config) {
@@ -24,11 +30,16 @@ module.export = {
 
         // require the db handler wrapper
         // and return a new instance of the wrapper
-        let db = require(supported[type]);
+        let db = require(supported[config._db_type]);
         return new db(config);
     },
-
-    // registers a new db handler
+     /**
+     * registers a new db handler
+     * @access public
+     * @param {String} type
+     * @param {String} handler
+     * @return {self}
+     */
     register: (type, handler) => {
         if (!validate(type).isString({notempty: true}).result) {
             throw new Error('INVALID_TYPE');
@@ -37,5 +48,8 @@ module.export = {
             throw new Error('INVALID_HANDLER');
         }
         supported[type] = handler;
+        return wrapper;
     }
 }
+
+module.export = wrapper;

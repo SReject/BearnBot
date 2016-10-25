@@ -1,8 +1,22 @@
+/**
+ * Constructor for easy input validation
+ * @access private
+ * @param {varies} input
+ */
 function Validate(input) {
     this.result = true;
     this.value = input;
 }
 Validate.prototype = {
+
+    /**
+     * Checks if the instance value has the specified property. If the property
+     * exists, a new validate instance is created and returned for that
+     * property's value. Otherwise the current validate instance is returned
+     * @access public
+     * @param {String} prop
+     * @return {Validate}
+     */
     has: function (prop) {
         if (this.result) {
             if (!this.value.hasOwnProperty(prop)) {
@@ -14,7 +28,14 @@ Validate.prototype = {
         return this;
     },
 
-    isString: function(options) {
+    /**
+     * Checks if the instance's value is a string
+     * @access public
+     * @param {Object} options
+     * @param {Boolean} options.notempty
+     * @return {Validate}
+     */
+    isString: function (options) {
         if (this.result) {
             if (typeof this.value !== 'string') {
                 this.result = false;
@@ -27,7 +48,16 @@ Validate.prototype = {
         return this;
     },
 
-    isNumber: function(options) {
+    /**
+     * Checks if the instance's value is a number
+     * @access public
+     * @param {Object} options
+     * @param {Number} options.integer
+     * @param {Boolean} options.unsigned
+     * @param {Array} options.between
+     * @return {Validate}
+     */
+    isNumber: function (options) {
         if (this.result) {
             if typeof this.value !== 'number') {
                 this.result = false;
@@ -44,6 +74,23 @@ Validate.prototype = {
         return this;
     },
 
+    /**
+     * Checks if the instance's value is an object
+     * @access public
+     * @return {Validate}
+     */
+    isObject: function () {
+        if (this.result && typeof this.value !== 'object') {
+            this.result = false;
+        }
+        return this;
+    },
+
+    /**
+     * Checks if the instance's value is truthy
+     * @access public
+     * @return {Validate}
+     */
     isTruthy: function () {
         if (this.result && !this.value) {
             this.result = false;
@@ -52,6 +99,12 @@ Validate.prototype = {
     }
 }
 
+/**
+ * Exported wrapper function for creating a Validate instance
+ * @access public
+ * @param {varies} input
+ * @returns {Validate}
+ */
 module.exports = function (input) {
     return new Valiate(input);
 };
