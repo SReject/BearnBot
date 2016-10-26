@@ -1,11 +1,11 @@
 {
     "api": {
-        "apibaseurl":   "https://beam.pro/api/v1/",
-        "redirect_uri": "http://example.com",
-        "client_id":    "oauth_client_id",
-        "secret":       "oauth_client_secret",
-        "authorizeurl": "https://beam.pro/oauth/authorize",
-        "tokenurl":     "https://beam.pro/api/v1/oauth/token"
+        "base_url":      "https://beam.pro/api/v1/",
+        "redirect_url":  "http://example.com",
+        "client_id":     "oauth_client_id",
+        "secret":        "oauth_client_secret",
+        "authorize_url": "https://beam.pro/oauth/authorize",
+        "token_url":     "https://beam.pro/api/v1/oauth/token"
     },
 
     "database": {

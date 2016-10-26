@@ -1,6 +1,6 @@
-var forker   = require('child_process'),
-    validate = require('./common/validate/validate.js'),
-    DbMgr    = require('./common/database/manager.js');
+var forker      = require('child_process'),
+    validate    = require('./common/validate/validate.js'),
+    databaseMgr = require('./common/database/manager.js');
 
 module.exports = function (config) {
 
@@ -30,7 +30,7 @@ module.exports = function (config) {
     }
 
     // validate config.api.client_id
-    if (!validate(apiconfig).has('clientid').isString({notempty: true}).result) {
+    if (!validate(apiconfig).has('client_id').isString({notempty: true}).result) {
         throw new Error('CONFIG_API_INVALID_CLIENTID');
     }
 
@@ -40,17 +40,17 @@ module.exports = function (config) {
     }
 
     // validate config.api.base_url
-    if (!validate(apiconfig).has('baseapiurl').isString({notempty: true}).result) {
+    if (!validate(apiconfig).has('base_url').isString({notempty: true}).result) {
         throw new Error('CONFIG_API_INVALID_BASEAPIURL')
     }
 
     // validate config.api.authorize_url
-    if (!validate(apiconfig).has('authorizeurl').isString({notempty: true}).result) {
+    if (!validate(apiconfig).has('authorize_url').isString({notempty: true}).result) {
         throw new Error('CONFIG_API_INVALID_AUTHORIZEURL');
     }
 
     // validate config.api.token_url
-    if (!validate(apiconfig).has('tokenurl').isString({notempty: true}).result) {
+    if (!validate(apiconfig).has('token_url').isString({notempty: true}).result) {
         throw new Error('CONFIG_API_INVALID_TOKENURL');
     }
 
@@ -73,7 +73,7 @@ module.exports = function (config) {
     if (loadBot || loadSite) {
 
         // boot the database maanager
-        db = DbMgr.boot(config.database);
+        db = databaseMgr.boot(config.database);
 
         // then fork the process if the bot and/or site needs to be loaded
         if (loadBot) {

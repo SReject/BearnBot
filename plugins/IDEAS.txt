@@ -1,0 +1,24 @@
+User Ranking/Permission system
+    - Allows creation of various rankings
+    - Streamers set permissions/command-access for each rank
+
+URL Filter
+    - When enabled, user must get permission before posting a link
+
+Word Filtering
+    - When abled, deletes messages containing various words
+
+Global Ban list
+    - Bans accounts across all streams the bot is in
+    - Intended to be used as an anti-spam measure
+    - Admin manipulations only
+
+Quotes
+    - Maintains a channel-specific list of quotes
+
+Ticker
+    - Automatically send specified messages to a channel at an interval
+    - Allows specified interval on a per-message or per-group basis
+
+Custom Commands
+    - Allows streamer to add custom commands to the bot
