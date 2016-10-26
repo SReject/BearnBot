@@ -1,21 +1,29 @@
 Global Ban list
     - Bans accounts across all streams the bot is in
-    - Intended to be used as an anti-spam measure
-    - Admin manipulations only
+        - Intended to be used as an anti-spam measure
+        - Admin manipulations only
+        - Whisper all streamers running the bot when a global ban takes place to be open about it?
+        - Perhaps the whisper also has an attached message with reason.
 
 User Ranking/Permission system
     - Allows creation of various rankings
     - Streamers set permissions/command-access for each rank
+        - Permission to post links
+        - Ability auto assign user to rank based on mod/sub/follower/points/hours.
+        - Additional points per cycle.
 
 Message Filtering
     - filter urls
+        - allow user defined list of domains
     - filter bad words
     - filter excessive use of capitals
     - filter excessive use of punctuation
     - filter excessive use of emotes
+    - filter repeat messages
 
 Follower and Sub auto-messages
     - Messages the channel when someone follows or (re)subs to the channel
+    - Streamjar tip messages
 
 Point system
     - Maintains a list of users and the amount of points accumulated
@@ -23,13 +31,23 @@ Point system
 
 Quotes
     - Maintains a channel-specific list of quotes
+        - Ability to pull any specific quote ID
+        - Ability to access full list of quotes somewhere online.
+        - Toggle ability to auto add game/date.
 
 Ticker
     - Automatically send specified messages to a channel at an interval
     - Allows specified interval on a per-message or per-group basis
+    - Ability to set minimum number of chat lines that must pass before posting again.
 
 Misc:
     Custom Commands
     Giveaway
+        - ability to use points in giveaway
+        - ability to run an auction
     Song Request
+    Queue System
+        - users can add themselves to queue
+        - auto remove user if they dont respond in X seconds when it is their turn
     Chat relay between beam channels
+        - If other chat is also running the bot, ignore it?
