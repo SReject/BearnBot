@@ -2,7 +2,7 @@ const validate = require('../validate/validate.js');
 
 // list of supported database's and their handler module
 let supported = {
-    'mongodb': './wrapper-monogodb.js'
+    'mongodb': './mongodb/driver.js'
 };
 
 let wrapper = {

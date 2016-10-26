@@ -12,8 +12,20 @@
 
     "main": "bearnbot.js",
     "engine": "node >= 6.0",
+
+    "scripts": {
+        "test": "grunt"
+    },
+
+    "devDependencies": {
+        "grunt": "1.0.1",
+        "load-grunt-tasks": "3.5.2",
+        "grunt-eslint": "19.0.0",
+        "eslint": "3.8.1"
+    },
+
     "dependencies": {
-        "mysql": "2.11.x",
+        "mongodb": "2.2.x",
         "hapi": "15.2.x",
         "beam-client-node": "0.8.0",
         "carina": "0.5.x"

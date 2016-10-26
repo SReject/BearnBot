@@ -1,16 +1,15 @@
 Global Ban list
-    - Bans accounts across all streams the bot is in
-        - Intended to be used as an anti-spam measure
-        - Admin manipulations only
-        - Whisper all streamers running the bot when a global ban takes place to be open about it?
-        - Perhaps the whisper also has an attached message with reason.
+    - Ban accounts across all streams the bot is in
+    - Intended to be used as an anti-spam measure
+    - Admin manipulations only
+    - Bans will have a reason associated with them
+    - Streamer option to receive whisper when global ban takes place
 
 User Ranking/Permission system
     - Allows creation of various rankings
     - Streamers set permissions/command-access for each rank
-        - Permission to post links
-        - Ability auto assign user to rank based on mod/sub/follower/points/hours.
-        - Additional points per cycle.
+    - Permission to post links
+    - Ability auto assign user to rank based on chat role
 
 Message Filtering
     - filter urls
@@ -23,31 +22,40 @@ Message Filtering
 
 Follower and Sub auto-messages
     - Messages the channel when someone follows or (re)subs to the channel
-    - Streamjar tip messages
 
 Point system
     - Maintains a list of users and the amount of points accumulated
     - Option to give points at set interval on a per-user basis
+    - Integrate with rank system to give additional points per cycle based on rank
 
 Quotes
     - Maintains a channel-specific list of quotes
-        - Ability to pull any specific quote ID
-        - Ability to access full list of quotes somewhere online.
-        - Toggle ability to auto add game/date.
+    - Ability to pull any specific quote ID
+    - Ability to access full list of quotes somewhere online.
+    - Toggle ability to auto add game/date.
 
 Ticker
     - Automatically send specified messages to a channel at an interval
     - Allows specified interval on a per-message or per-group basis
     - Ability to set minimum number of chat lines that must pass before posting again.
 
+Giveaway
+    - Chat role specific giveaways(followers, subs, mods, etc)
+    - Integrate with Ranking system to allow rank-specific giveaways
+    - Integrate with Points System to allow auctions
+    - Integrate with Points System to use points for giveaway buys
+
+User Queue System
+    - Maintains a list of queued users, allowing the next in queue to be output and removed from the list
+    - Auto remove user if they don't respond in X seconds when it is their turn; remove user from list
+    - Commands to self-add, mod-add, etc
+    - Integrate with Ranking system to allow only users of a specific rank to be added to the queue
+
+3rd Party integrations
+    - Streamjar tips
+    - GameWisp (re)subs
+
 Misc:
     Custom Commands
-    Giveaway
-        - ability to use points in giveaway
-        - ability to run an auction
-    Song Request
-    Queue System
-        - users can add themselves to queue
-        - auto remove user if they dont respond in X seconds when it is their turn
     Chat relay between beam channels
-        - If other chat is also running the bot, ignore it?
+    Song Request

@@ -59,12 +59,12 @@ Validate.prototype = {
      */
     isNumber: function (options) {
         if (this.result) {
-            if typeof this.value !== 'number') {
+            if (typeof this.value !== 'number') {
                 this.result = false;
             } else if (options) {
-                if (option.integer && (!isFinite(this.value) || /./g.test(String(this.value)))) {
+                if (options.integer && (!isFinite(this.value) || /./g.test(String(this.value)))) {
                     this.result = false;
-                } else if (option.unsigned && (!isFinite(this.value) || /^-/g.test(String(this.value)))) {
+                } else if (options.unsigned && (!isFinite(this.value) || /^-/g.test(String(this.value)))) {
                     this.result = false;
                 } else if (options.between && (this.value < options.between[0] || this.value > options.between[1])) {
                     this.result = false;
@@ -106,5 +106,5 @@ Validate.prototype = {
  * @returns {Validate}
  */
 module.exports = function (input) {
-    return new Valiate(input);
+    return new Validate(input);
 };
