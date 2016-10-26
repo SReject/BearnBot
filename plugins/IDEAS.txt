@@ -20,8 +20,9 @@ Message Filtering
     - filter excessive use of emotes
     - filter repeat messages
 
-Follower and Sub auto-messages
+Auto-messages
     - Messages the channel when someone follows or (re)subs to the channel
+    - Host messages with the ability to designate a minimum number of viewers for shoutout.
 
 Point system
     - Maintains a list of users and the amount of points accumulated
@@ -50,10 +51,17 @@ User Queue System
     - Auto remove user if they don't respond in X seconds when it is their turn; remove user from list
     - Commands to self-add, mod-add, etc
     - Integrate with Ranking system to allow only users of a specific rank to be added to the queue
+    
+Games
+    - Heist
+    - Roulette
+    - RPG
 
 3rd Party integrations
     - Streamjar tips
     - GameWisp (re)subs
+    - Extra Life donations
+    - Automatic backups via google drive or dropbox
 
 Misc:
     Custom Commands
