@@ -1,4 +1,5 @@
-const validate = require('../validate/validate.js');
+var validate = require('../validate/validate.js'),
+    structure = require('./structure.js');
 
 // list of supported database's and their handler module
 let supported = {
@@ -7,6 +8,23 @@ let supported = {
 
 let wrapper = {
 
+    boot: (config, callback) => {
+        var dbhandler = wrapper.create(config, (err) => {
+            if (err) {
+                callback(err);
+            } else {
+                dbhandler.createTable(structure, {skipIfExists: true}, (err) => {
+                    if (err) {
+                        callback(err);
+                    } else {
+                        callback(false, dbhandler);
+                    }
+                });
+            }
+        });
+        return dbhandler;
+    },
+
     /**
      * returns a database wrapper instance for the specified database type
      * @access public
@@ -14,7 +32,7 @@ let wrapper = {
      * @param {String} config._db_type
      * @return {Database}
      */
-    boot: (config) => {
+    create: (config, callback) => {
         // validate config
         if (!config) {
             throw new Error('INVALID_DATABASE_CONFIG');
@@ -31,7 +49,7 @@ let wrapper = {
         // require the db handler wrapper
         // and return a new instance of the wrapper
         let db = require(supported[config._db_type]);
-        return new db(config);
+        return new db(config, callback);
     },
      /**
      * registers a new db handler

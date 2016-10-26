@@ -42,6 +42,8 @@ Validate.prototype = {
             } else if (options) {
                 if (options.notempty && !this.value) {
                     this.result = false;
+                } else if (options.match && !options.match.test(this.value)) {
+                    this.result = false;
                 }
             }
         }

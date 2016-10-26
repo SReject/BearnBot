@@ -1,5 +1,6 @@
-{
-    "users": [
+[{
+    "name": "users",
+    "fields": [
         {
             "name":    "userid",
             "type":    "integer:unsigned",
@@ -12,9 +13,10 @@
             "type":    "integer:unsigned",
             "options": ["notnull"]
         }
-    ],
-
-    "beam_oauth_tokens": [
+    ]
+}, {
+    "name": "beam_oauth_tokens",
+    "fields": [
         {
             "name":    "userid",
             "type":    "integer:unsigned",
@@ -44,9 +46,10 @@
             "type":    "text:1028",
             "options": ["notnull"]
         }
-    ],
-
-    "beam_oauth_salts": [
+    ]
+}, {
+    "name": "beam_oauth_salts",
+    "fields": [
         {
             "name": "userid",
             "type": "integer:unsigned",
@@ -56,9 +59,10 @@
             "type": "text:256",
             "options": ["notnull"]
         }
-    ],
-
-    "beam_channels": [
+    ]
+}, {
+    "name": "beam_channels",
+    "fields": [
         {
             "name":    "chanid",
             "type":    "integer:unsigned",
@@ -68,9 +72,11 @@
             "type":    "integer:unsigned",
             "options": ["notnull"]
         }
-    ],
+    ]
+}, {
 
-    "beam_botchanaliases": [
+    "name": "beam_botchanaliases",
+    "fields": [
         {
             "name":    "chanid",
             "type":    "integer:unsigned",
@@ -85,4 +91,4 @@
             "options": ["notnull", "default:false"]
         }
     ]
-}
+}]
