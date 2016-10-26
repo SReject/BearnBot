@@ -27,6 +27,7 @@
     "dependencies": {
         "mongodb": "2.2.x",
         "hapi": "15.2.x",
+        "inert": "4.0.2",
         "beam-client-node": "0.8.0",
         "carina": "0.5.x"
     }
