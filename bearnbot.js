@@ -24,7 +24,7 @@ module.exports = function (config, callback) {
 
         // validate config.api.redirect_url
         if (!validate(config.api).has("redirect_url").isString({notempty: true}).result) {
-            throw new Error('CONFIG_API_INVALID_REDIRECTURI');
+            throw new Error('CONFIG_API_INVALID_REDIRECTURL');
         }
 
         // validate config.api.client_id
@@ -39,7 +39,7 @@ module.exports = function (config, callback) {
 
         // validate config.api.base_url
         if (!validate(config.api).has('base_url').isString({notempty: true}).result) {
-            throw new Error('CONFIG_API_INVALID_BASEAPIURL')
+            throw new Error('CONFIG_API_INVALID_BASEURL')
         }
 
         // validate config.api.authorize_url

@@ -1,7 +1,17 @@
 var validate = require('../validate/validate.js'),
     mongoClient = require('mongodb').MongoClient,
-    dbstructure = require('../structure.json');
+    structure = require('../structure.json');
 
+/**
+ * @access public
+ * @param {Object} config
+ * @param {String} config.host
+ * @param {Number} config.port
+ * @param {String} config.username
+ * @param {String} config.password
+ * @param {String} config.database
+ * @return {Driver}
+ */
 function Driver(config, callback) {
     var self = this,
         url = "mongodb://",
@@ -37,6 +47,7 @@ function Driver(config, callback) {
         }
     }
 
+    // validate config
     if (!validate(config).isTruthy().result) {
         throw new Error("INVALID_CONFIG");
     }
@@ -46,39 +57,39 @@ function Driver(config, callback) {
     if (!validate(config).has('port') && validate(config).has('port').isNumber({integer: true, unsigned: true, between: [1,65535]}).result) {
         throw new Error("MISSING_PORT");
     }
-    if (validate(config).has('user') && !validate(config).has('user').isString({notempty: true}).result) {
+    if (validate(config).has('username') && !validate(config).has('username').isString({notempty: true}).result) {
         throw new Error("MISSING_USER");
     }
-    if (validate(config).has('pass') && !validate(config).has('pass').isString({notempty: true}).result) {
+    if (validate(config).has('password') && !validate(config).has('password').isString({notempty: true}).result) {
         throw new Error("MISSING_PASS");
     }
     if (!validate(config).has('database').isString({notempty: true}).result) {
         throw new Error("MISSING_DATABASENAME");
     }
-    if (!validate(dbstructure).isTruthy().result || !Object.keys(dbstructure).length) {
+    if (!validate(structure).isTruthy().result || !Object.keys(structure).length) {
         throw new Error("INVALID_DATABASE_STRUCTURE");
     }
 
 
     // build mongo db url
-    if (config.user) {
-        login = config.user;
+    if (config.username) {
+        login = config.username;
     }
-    if (config.pass) {
-        if (!config.user) {
-            login = "anonymous";
-        }
-        login += ":" + config.pass;
+    if (config.password) {
+        login += (config.username || "anonymous") + ":" + config.password;
     }
     self.url = url + (login ? login + '@' : '') + config.host + ":" + (config.port || 27017) + '/' + config.database;
 
+    // attempt connection
     self.connection = mongoClient.connect(url, (err, db) => {
         if (err) {
             this.shutdown('error');
             callback(err, self);
+
+        // if no errors, attempt to create tables/collections;
         } else {
             self.database = db.db(config.database);
-            tables = Object.keys(dbstructure);
+            tables = Object.keys(structure);
             next(tables.shift());
         }
     });
