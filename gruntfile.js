@@ -4,7 +4,6 @@ module.exports = function(grunt) {
         eslint: {
             options: {
                 configFile: '.eslintrc',
-                rulePaths: ['conf/rules']
             },
             target: ['*.js']
         }
