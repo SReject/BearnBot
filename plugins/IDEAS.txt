@@ -51,7 +51,7 @@ User Queue System
     - Auto remove user if they don't respond in X seconds when it is their turn; remove user from list
     - Commands to self-add, mod-add, etc
     - Integrate with Ranking system to allow only users of a specific rank to be added to the queue
-    
+
 Games
     - Heist
     - Roulette

@@ -71,6 +71,10 @@
             "name":    "userid",
             "type":    "integer:unsigned",
             "options": ["notnull"]
+        }, {
+            "name":    "join",
+            "type":    "boolean",
+            "options": ["notnull", "default:true"]
         }
     ]
 }, {
