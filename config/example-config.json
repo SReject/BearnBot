@@ -17,13 +17,15 @@
         "password": "database_password"
     },
 
-    "bot": {
-        "username": "BearnBot",
-        "password": "password"
+    "chatbot": {
+        "enable": true,
+        "username": "beam_username",
+        "password": "beam_password"
     },
 
     "site": {
-        "address": "127.0.0.1",
+        "enable": true,
+        "address": "localhost",
         "port":    80
     }
 }

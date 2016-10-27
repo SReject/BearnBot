@@ -1,12 +1,12 @@
 var validate = require('../validate/validate.js'),
-    structure = require('./structure.js');
+    structure = require('./structure.json');
 
 // list of supported database's and their handler module
 var supported = {
-    'mongodb': './mongodb/driver.js'
+    'mongodb': './mongodb/mongodb-driver.js'
 };
 
-let wrapper = {
+var wrapper = {
 
     boot: (config, callback) => {
         var dbhandler = wrapper.create(config, (err) => {
@@ -48,7 +48,7 @@ let wrapper = {
 
         // require the db handler wrapper
         // and return a new instance of the wrapper
-        let db = require(supported[config._db_type]);
+        var db = require(supported[config._db_type]);
         return new db(config, callback);
     },
      /**

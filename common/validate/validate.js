@@ -19,7 +19,7 @@ Validate.prototype = {
      */
     has: function (prop) {
         if (this.result) {
-            if (!this.value.hasOwnProperty(prop)) {
+            if (this.value.hasOwnProperty(prop)) {
                 return new Validate(this.value[prop])
             } else {
                 this.result = false;
@@ -63,8 +63,9 @@ Validate.prototype = {
         if (this.result) {
             if (typeof this.value !== 'number') {
                 this.result = false;
+
             } else if (options) {
-                if (options.integer && (!isFinite(this.value) || /./g.test(String(this.value)))) {
+                if (options.integer && (!isFinite(this.value) || /\./g.test(String(this.value)))) {
                     this.result = false;
                 } else if (options.unsigned && (!isFinite(this.value) || /^-/g.test(String(this.value)))) {
                     this.result = false;
