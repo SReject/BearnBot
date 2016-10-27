@@ -10,8 +10,8 @@
 
     "database": {
         "_db_type": "mongodb",
-        "host": "mongodb.example.com",
-        "port": 3306,
+        "host":     "mongodb.example.com",
+        "port":     3306,
         "database": "database_name",
         "username": "database_username",
         "password": "database_password"

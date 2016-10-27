@@ -2,7 +2,7 @@ var validate = require('../validate/validate.js'),
     structure = require('./structure.js');
 
 // list of supported database's and their handler module
-let supported = {
+var supported = {
     'mongodb': './mongodb/driver.js'
 };
 

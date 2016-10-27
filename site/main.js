@@ -1,11 +1,13 @@
-var Hapi = require('hapi'),
-    path = require('path'),
-    inert = require('inert'),
-    validate = require('../common/validate/validate.js');
+var path       = require('path'),
+    Hapi       = require('hapi'),
+    vision     = require('vision'),
+    handlebars = require('handlebars'),
+    apiwrapper = require('./api/wrapper.js'),
+    validate   = require('../common/validate/validate.js');
 
 module.exports = {
     init: function (config) {
-        var options = {};
+        var options = {}, server;
         if (!validate(config).has('address').result) {
             options.address = 'localhost';
         } else if (!validate(config.address).isString({notempty: true}).result) {
@@ -19,17 +21,42 @@ module.exports = {
             throw new Error("INVALID_PORT");
         }
 
-        var server = new Hapi.server({
-            connections: {
-                routes: {
-                    files: {
-                        relativeTo: path.join(__dirname, 'www/static')
+        server = new Hapi.server();
+        server.connection(options);
+        server.register(vision, (err) => {
+            if (err) {
+                throw new err;
+            }
+            server.views({
+                engines: {
+                    html: handlebars,
+                },
+                path:         path.join(__dirname, 'www/templates'),
+                layoutPath:   path.join(__dirname, 'www/templates/layouts'),
+                layout:       path.join(__dirname, 'default'),
+                partialsPath: path.join(__dirname, 'www/templates/partials')
+            });
+            server.route([
+                {
+                    method: ['GET', 'POST', 'PUT', 'DELETE'],
+                    path: '/api/{args*}',
+                    handler: apiwrapper
+                }, {
+                    method: 'GET',
+                    path: '/{page*}',
+                    handler: (request, reply) => {
+                        try {
+                            var data = {},
+                                page = encodeURIComponent(request.params.user);
+
+                            reply.views(page + '/index.html', data);
+                        } catch (e) {
+                            // file not found?
+                        }
                     }
                 }
-            }
+            ]);
+            server.start(() => {});
         });
-        server.register(inert, () => {});
-        server.connection(options);
-        server.start(() => {});
     }
 }
