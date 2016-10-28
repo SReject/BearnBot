@@ -1,5 +1,5 @@
-var validate    = require('./common/validate/validate.js'),
-    PluginMgr   = require('./common/plugins/plugin-manager.js'),
+var validate    = require('./common/validate.js'),
+    PluginMgr   = require('./common/plugin-manager.js'),
     chatBot     = require('./bot/chatbot.js'),
     site        = require('./site/serverapp.js');
 
@@ -20,13 +20,13 @@ module.exports = function (config, callback) {
         }
 
         // ensure the config argument has an 'api' property
-        if (!validate(config).has("api").isObject().result) {
+        if (!validate(config).has('api').isObject().result) {
             throw new Error('CONFIG_API_MISSING');
         }
         var result = {};
 
         // validate config.api.redirect_url
-        if (!validate(config.api).has("redirect_url").isString({notempty: true}).result) {
+        if (!validate(config.api).has('redirect_url').isString({notempty: true}).result) {
             throw new Error('CONFIG_API_INVALID_REDIRECTURL');
         }
 
@@ -60,31 +60,50 @@ module.exports = function (config, callback) {
             throw new Error('CONFIG_MISSING_DATABASE');
         }
 
-        // Check to ensure something needs started
-        if (!validate(config).has('bot').isTruthy().result && !validate(config).has('site').isTruthy().result) {
-            callback(false, null);
-            return
-        }
-
-
-        // check if the config has a 'bot' property
-        if (validate(config).has('bot').isTruthy().result) {
-            result.bot = chatBot(config.bot);
-        }
-
-        // check if the config has a 'site' property
-        if (validate(config).has('site').isTruthy().result) {
-            result.site = site(config.site);
-        }
-
-        // initialize the plugin manager
-        PluginMgr.init(result, (err) => {
-            if (err) {
-                callback(err);
+        var loadBot = (cb) => {
+            if (validate(config).has('bot').isTruthy().result && (!validate(config.bot).has('enable').result || validate(config.bot).has('enable').isTruthy().result)) {
+                return chatBot(config, (err, res) => {
+                    if (err) {
+                        cb(err);
+                    } else {
+                        result.chatbot = res;
+                        cb();
+                    }
+                });
             } else {
-                callback(false, result);
+                cb();
             }
+        };
+        var loadSite = (cb) => {
+            if (validate(config).has('site').isTruthy().result && (!validate(config.site).has('enable').result || validate(config.site).has('enable').isTruthy().result)) {
+                site(config, (err, res) => {
+                    if (err) {
+                        cb(err);
+                    } else {
+                        result.site = res;
+                        cb();
+                    }
+                });
+            } else {
+                cb();
+            }
+        };
+
+        loadBot((err) => {
+            if (err) {
+                return callback(err);
+            }
+            loadSite((err) => {
+                if (err) {
+                    callback(err);
+                } else if (result.chatbot || result.site) {
+                    PluginMgr.init(config, result, callback);
+                } else {
+                    callback();
+                }
+            });
         });
+
     } catch (e) {
         callback(e);
     }

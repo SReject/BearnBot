@@ -1,4 +1,4 @@
-module.exports = function (server) {
+module.exports = function (server, config) {
     server.route({
         method: "GET",
         path: "/",
@@ -27,8 +27,27 @@ module.exports = function (server) {
         method: "GET",
         path: "/login",
         handler: (request, reply) => {
-            reply.view('static/login');
+            if (request.hmdbs.get("authorized")) {
+                reply.redirect('/');
+            } else {
+                var url = [
+                    config.api.authorize_url,
+                    '?response_type=code',
+                    '&client_id=' + config.api.client_id,
+                    '&redirect_uri=' + encodeURIComponent(config.api.redirect_url),
+                    '&scope=' + [
+                            'user:details:self',
+                            'channel:details:self',
+                            'channel:update:self'
+                        ].join('%20')
+                ].join('');
+
+                var data = {
+                    auth_url: url
+                };
+
+                reply.view('static/login', data);
+            }
         }
     });
-
 };
