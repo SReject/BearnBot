@@ -1,7 +1,0 @@
-{
-    "username": "database_username",
-    "password": "database_password",
-    "host"    : "mongodb.example.com",
-    "port"    : 80,
-    "database": "some_database"
-}

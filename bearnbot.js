@@ -1,110 +1,145 @@
-var validate    = require('./common/validate.js'),
-    PluginMgr   = require('./common/plugin-manager.js'),
-    chatBot     = require('./bot/chatbot.js'),
-    site        = require('./site/serverapp.js');
+// TODO : Setup logging via winston based on config
 
-module.exports = function (config, callback) {
-    if (callback === undefined) {
-        callback = (err) => {
-            if (err) {
-                throw err;
-            }
-        }
+var path      = require('path'),
+    args      = require('yargs').argv,
+    Promise   = require('bluebird'),
+
+    config    = require('./lib/common/config.js'),
+    logger    = require('./lib/common/logger.js'),
+    validate  = require('./lib/common/validate.js');
+
+module.exports = (options) => {
+
+    // base resolution of which the main promise will resolve with
+    var resolution = {
+        website: new Promise((resolve) => resolve()),
+        chatbot: new Promise((resolve) => resolve())
+    };
+
+    // validate the input config
+    config.init(options);
+    config = config.get();
+
+    // initialize the logger
+    logger.init(config.logging);
+
+    // if neither the webserver nor the chatbot should be loaded; resolve with
+    // the stock resolution
+    if (!config.webserver.enable && !config.chatbot.enable) {
+        logger.debug('Webserver and chatbot are disabled; No work to do');
+        return new Promise((resolve) => resolve(resolution));
     }
 
-    try {
+    // return a new promise that will be resolved once all components are
+    // initialized
+    return new Promise((resolve, reject) => {
+        logger.info("Initializing...");
 
-        // Ensure the config argument is an object
-        if (!validate(config).isObject().result) {
-            throw new Error('INVALID_CONFIG');
-        }
-
-        // ensure the config argument has an 'api' property
-        if (!validate(config).has('api').isObject().result) {
-            throw new Error('CONFIG_API_MISSING');
-        }
-        var result = {};
-
-        // validate config.api.redirect_url
-        if (!validate(config.api).has('redirect_url').isString({notempty: true}).result) {
-            throw new Error('CONFIG_API_INVALID_REDIRECTURL');
-        }
-
-        // validate config.api.client_id
-        if (!validate(config.api).has('client_id').isString({notempty: true}).result) {
-            throw new Error('CONFIG_API_INVALID_CLIENTID');
-        }
-
-        // validate config.api.secret
-        if (!validate(config.api).has('secret').isString({notempty: true}).result) {
-            throw new Error('CONFIG_API_INVALID_SECRET');
-        }
-
-        // validate config.api.base_url
-        if (!validate(config.api).has('base_url').isString({notempty: true}).result) {
-            throw new Error('CONFIG_API_INVALID_BASEURL')
-        }
-
-        // validate config.api.authorize_url
-        if (!validate(config.api).has('authorize_url').isString({notempty: true}).result) {
-            throw new Error('CONFIG_API_INVALID_AUTHORIZEURL');
-        }
-
-        // validate config.api.token_url
-        if (!validate(config.api).has('token_url').isString({notempty: true}).result) {
-            throw new Error('CONFIG_API_INVALID_TOKENURL');
-        }
-
-        // validate config.database
-        if (!validate(config).has('database').isTruthy().result) {
-            throw new Error('CONFIG_MISSING_DATABASE');
-        }
-
-        var loadBot = (cb) => {
-            if (validate(config).has('bot').isTruthy().result && (!validate(config.bot).has('enable').result || validate(config.bot).has('enable').isTruthy().result)) {
-                return chatBot(config, (err, res) => {
-                    if (err) {
-                        cb(err);
-                    } else {
-                        result.chatbot = res;
-                        cb();
-                    }
-                });
-            } else {
-                cb();
-            }
-        };
-        var loadSite = (cb) => {
-            if (validate(config).has('site').isTruthy().result && (!validate(config.site).has('enable').result || validate(config.site).has('enable').isTruthy().result)) {
-                site(config, (err, res) => {
-                    if (err) {
-                        cb(err);
-                    } else {
-                        result.site = res;
-                        cb();
-                    }
-                });
-            } else {
-                cb();
-            }
-        };
-
-        loadBot((err) => {
-            if (err) {
-                return callback(err);
-            }
-            loadSite((err) => {
-                if (err) {
-                    callback(err);
-                } else if (result.chatbot || result.site) {
-                    PluginMgr.init(config, result, callback);
-                } else {
-                    callback();
-                }
-            });
+        // initialize the oauth2 library
+        //     By calling it here the specified configuration will presist into
+        //     subsequent require()'s of the oauth2.js module
+         require('./lib/common/oauth2.js')({
+            authorizeurl : 'https://beam.pro/oauth/authorize',
+            tokenurl     : 'https://beam.pro/api/v1/oauth/token',
+            clientid     : config.api.clientid,
+            clientsecret : config.api.clientsecret,
+            redirecturi  : (config.ssl ? 'https://' : 'http://') + config.domain + '/login/code'
         });
 
-    } catch (e) {
-        callback(e);
-    }
+
+        // initialize the database handler module
+        require('./lib/common/database-handler.js').init().then(() => {
+            // return pluginmgr.init();
+
+        // then initialize the website and chat bot respecting configuration
+        }).then(() => {
+            if (config.webserver.enable) {
+                resolution.webserver = require('./lib/webserver/')();
+            }
+            if (config.chatbot.enable) {
+                resolution.chatbot = require('./lib/chatbot/')();
+            }
+
+            // Resolve the main Promise
+            resolve(resolution);
+
+        // if anything throws an error or rejects their promise then reject the
+        // main promise
+        }).catch((e) => {
+            logger.error("Startup failed: ");
+            logger.error(e);
+            reject(e);
+        });
+    });
 };
+
+
+// if this module was called as the main entry module(from the command line)
+// then attempt to compile the config and call the initialization function
+if (require.main === module) {
+
+    // configuration store
+    var options = {};
+
+    // Command line argument: -bearnbotcfg
+    //     If specified the default config location is used to retrieve the
+    //     configuration
+    if (args.bearnbotcfg === true) {
+        options = require(path.join(__dirname, './config/config.json'));
+
+    // Command line argument: -bearnbot={file}
+    //     If specified then indicated {file} is the path to the configuration
+    //     file
+    } else if (validate(args.bearnbotcfg).isString({notempty: true}).result) {
+        options = require(path.resolve(args.bearnbotcfg));
+
+    // If no command line argument is specified
+    //     The configuration is assumed to be stored as process enviornment
+    //     variables, formated as:
+    //
+    //     BEARNBOT_{SECTION_}{FIELD}
+    } else {
+        Object.keys(process.env).forEach((item) => {
+            var match = item.match(/^BEARNBOT_(?:([A-Z]+)(?:_|$))([A-Z_]+)$/);
+            if (match) {
+                var section = match[1].toLowerCase(),
+                    field   = match[2].toLowerCase();
+
+                if (field.length) {
+                    if (!Object.prototype.hasOwnProperty.call(options, section)) {
+                        options[section] = {};
+
+                    } else if (!validate(options).has(section).isObject().result) {
+                        throw new Error("INVALID_CONFIG");
+                    }
+                    options[section][field] = process.env[item];
+                } else {
+                    options[section] = process.env[item];
+                }
+            }
+        });
+    }
+
+    // Call the initialization function
+    module.exports(options).then((components) => {
+
+        // if the web server is enabled wait for it to finish loading then
+        // output a message indicating such
+        if (config.webserver.enable) {
+            components.webserver.catch((e) => {
+                logger.error("Unable to start website:");
+                logger.error(e);
+            });
+        }
+
+        // if the chatbot is enabled wait for it to finish loading then output a
+        // message indicating such
+        if (config.chatbot.enable) {
+            components.chatbot.catch((e) => {
+                logger.error("Unable to start chatbot:");
+                logger.error(e);
+            });
+        }
+
+    });
+}

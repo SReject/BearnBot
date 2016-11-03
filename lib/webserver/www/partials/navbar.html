@@ -18,17 +18,17 @@
                 <li id="navbarDevMenu" class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">Developers <b class="caret"></b></a>
                     <ul class="dropdown-menu">
-                        <li><a href="#">API</a></li>
-                        <li><a href="#">Plugin Creation</a></li>
-                        <li><a href="#">Source</a></li>
+                        <li><a href="/dev/api">API</a></li>
+                        <li><a href="/dev/plugins">Plugin Creation</a></li>
+                        <li><a href="/dev/source">Source</a></li>
                     </ul>
                 </li>
 
-                <li><a href="#">Contact</a></li>
+                <li><a href="/contact">Contact</a></li>
 
                 {{#if user.authorized}}
                 <li id="navbarUserMenu" class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">{{user.name}}</a>
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"><strong>{{user.username}}</strong> <b class="caret"></b></a>
                     <ul class="dropdown-menu">
                         <li><a href="/settings">Settings</a></li>
                         <li><a href="/logout">Logout</a></li>

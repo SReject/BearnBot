@@ -1,0 +1,35 @@
+{
+    "domain": "localhost",
+    "ssl"   : false,
+
+    "database":{
+        "address" : "database_address",
+        "port"    : "port",
+        "database": "database",
+        "username": "database_username",
+        "password": "database_password"
+    },
+
+    "api": {
+        "clientid":     "your client_id_from_beam",
+        "clientsecret": "your_client_secret_from_beam"
+    },
+
+    "webserver": {
+        "enable" : true,
+        "address": "127.0.0.1",
+        "port"   : 80
+    },
+
+    "chatbot": {
+        "enable":   true,
+        "username": "Bot's Beam username",
+        "password": "Bot's Beam password"
+    },
+
+    "logging":{
+        "enable":    true,
+        "directory": "/logs",
+        "level":     "debug"
+    }
+}
